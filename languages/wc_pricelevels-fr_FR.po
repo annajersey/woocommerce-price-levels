@@ -1,0 +1,91 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: pricelevels\n"
+"POT-Creation-Date: 2014-02-06 17:35+0200\n"
+"PO-Revision-Date: 2014-02-06 17:36+0200\n"
+"Last-Translator: \n"
+"Language-Team: LBI <lbitestme@gmail.com>\n"
+"Language: fr_FR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.6.3\n"
+"X-Poedit-Basepath: d:\\wamp\\www\\wordpress\\wp-content\\plugins"
+"\\woocommerce-pricelevels\\\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Poedit-KeywordsList: __\n"
+"X-Poedit-SearchPath-0: d:\\wamp\\www\\wordpress\\wp-content\\plugins"
+"\\woocommerce-pricelevels\n"
+
+#: \wp-content\plugins\woocommerce-pricelevels/woocommerce-pricelevels.php:76
+msgid "WooCommerce Price Levels requires WooCommerce installed and activated."
+msgstr "Niveaux WooCommerce Prix nécessite WooCommerce installé et activé."
+
+#: \wp-content\plugins\woocommerce-pricelevels/woocommerce-pricelevels.php:80
+#: \wp-content\plugins\woocommerce-pricelevels/templates/levels_template.php:10
+msgid "Customer Levels"
+msgstr "Niveaux des clients"
+
+#: \wp-content\plugins\woocommerce-pricelevels/woocommerce-pricelevels.php:89
+msgid " \tPrice"
+msgstr "\tPrix"
+
+#: \wp-content\plugins\woocommerce-pricelevels/woocommerce-pricelevels.php:145
+#: \wp-content\plugins\woocommerce-pricelevels/templates/levels_template.php:10
+msgid "Add New Role"
+msgstr "Ajouter un nouveau rôle"
+
+#: \wp-content\plugins\woocommerce-pricelevels/woocommerce-pricelevels.php:148
+#: \wp-content\plugins\woocommerce-pricelevels/woocommerce-pricelevels.php:178
+msgid "Role Name"
+msgstr "rôle Nom"
+
+#: \wp-content\plugins\woocommerce-pricelevels/woocommerce-pricelevels.php:175
+msgid "Edit Role"
+msgstr "Modifier Rôle"
+
+#: \wp-content\plugins\woocommerce-pricelevels/woocommerce-pricelevels.php:182
+msgid "Save"
+msgstr "Sauver"
+
+#: \wp-content\plugins\woocommerce-pricelevels/woocommerce-pricelevels.php:197
+msgid "This role still has"
+msgstr "Ce rôle a encore"
+
+#: \wp-content\plugins\woocommerce-pricelevels/woocommerce-pricelevels.php:197
+#: \wp-content\plugins\woocommerce-pricelevels/classes/admin-role-table.php:208
+msgid ""
+"customers / users assigned to it. You must remove all users from a role "
+"before it can be deleted."
+msgstr ""
+"clients / utilisateurs qui lui sont confiées. Vous devez supprimer tous les "
+"utilisateurs d'un rôle avant d'être supprimé."
+
+#: \wp-content\plugins\woocommerce-pricelevels/classes/admin-role-table.php:131
+msgid "Role Display Name"
+msgstr "Rôle nom d'affichage"
+
+#: \wp-content\plugins\woocommerce-pricelevels/classes/admin-role-table.php:132
+msgid "Role Key"
+msgstr "Clé de Rôle"
+
+#: \wp-content\plugins\woocommerce-pricelevels/classes/admin-role-table.php:133
+msgid "Count of Users"
+msgstr "Le nombre d'utilisateurs"
+
+#: \wp-content\plugins\woocommerce-pricelevels/classes/admin-role-table.php:135
+msgid "Actions"
+msgstr "Actes"
+
+#: \wp-content\plugins\woocommerce-pricelevels/classes/admin-role-table.php:183
+#: \wp-content\plugins\woocommerce-pricelevels/classes/admin-role-table.php:298
+msgid "Delete"
+msgstr "Effacer"
+
+#: \wp-content\plugins\woocommerce-pricelevels/classes/admin-role-table.php:208
+msgid "role still has"
+msgstr "Ce rôle a encore"
+
+#: \wp-content\plugins\woocommerce-pricelevels/classes/admin-role-table.php:297
+msgid "Edit"
+msgstr "Modifier"

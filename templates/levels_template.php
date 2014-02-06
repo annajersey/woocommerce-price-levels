@@ -7,7 +7,7 @@
     <div class="wrap">
         
         <div id="icon-users" class="icon32"><br/></div>
-        <h2>Customer Levels&nbsp;&nbsp;<a class="add-new-h2" href="<?php echo get_bloginfo('url'); ?>/wp-admin/admin.php?page=new_roles">Add New Role</a></h2>
+        <h2><?php echo __('Customer Levels','wc_pricelevels'); ?>&nbsp;&nbsp;<a class="add-new-h2" href="<?php echo get_bloginfo('url'); ?>/wp-admin/admin.php?page=new_roles"><?php echo __('Add New Role','wc_pricelevels'); ?></a></h2>
         
         
         

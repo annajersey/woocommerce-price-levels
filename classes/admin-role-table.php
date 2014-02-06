@@ -128,11 +128,11 @@ class TT_Example_List_Table extends WP_List_Table {
     function get_columns(){
         $columns = array(
             'cb'        => '<input type="checkbox" />', //Render a checkbox instead of text
-            'title'     => 'Role Display Name',
-			'key'		=>	'Role Key',
-            'number'    => 'Count of Users',
+            'title'     => __('Role Display Name','wc_pricelevels'),
+			'key'		=>	__('Role Key','wc_pricelevels'),
+            'number'    => __('Count of Users','wc_pricelevels'),
 			
-			'actions' => 'Actions'
+			'actions' => __('Actions','wc_pricelevels')
            
         );
         return $columns;
@@ -180,7 +180,7 @@ class TT_Example_List_Table extends WP_List_Table {
      **************************************************************************/
     function get_bulk_actions() {
         $actions = array(
-            'delete'    => 'Delete'
+            'delete'    => __('Delete','wc_pricelevels')
 			
         );
 		
@@ -202,7 +202,12 @@ class TT_Example_List_Table extends WP_List_Table {
 			foreach($_REQUEST['role'] as $role_key){
 				$role=get_role( $role_key );
 				if(isset($role->capabilities['woo_role']) && $role->capabilities['woo_role']==1){
-					$wp_roles->remove_role($role_key);
+					$wp_user_search = new WP_User_Search($usersearch, $userspage, $role_key );
+					$editors = $wp_user_search->get_results();
+					$user_num = sizeof($editors);
+					if($user_num>0){ wp_die($role->name.' '.__("role still has",'wc_pricelevels').' '.$user_num.' '.__("customers / users assigned to it. You must remove all users from a role before it can be deleted.",'wc_pricelevels'));
+					}else{
+					$wp_roles->remove_role($role_key);}
 				}
 			}
 			
@@ -285,12 +290,12 @@ class TT_Example_List_Table extends WP_List_Table {
 			$table_data[$i]['ID']=$key;
 			$table_data[$i]['title']= $role['name'];
 			$table_data[$i]['key']= $key;
-			$wp_user_search = new WP_User_Search($usersearch, $userspage, $role['name']);
+			$wp_user_search = new WP_User_Search($usersearch, $userspage, $key);
 			$editors = $wp_user_search->get_results();
 			$table_data[$i]['number']= sizeof($editors);
 			if(isset($role['capabilities']['woo_role']) && $role['capabilities']['woo_role']==1){
-				$edit = sprintf('<a href="?page=%s&role=%s">Edit</a>','edit_role',$key);
-				$delete = sprintf('&nbsp;<a href="?page=%s&role=%s">Delete</a>','delete_role',$key);
+				$edit = sprintf('<a href="?page=%s&role=%s">'.__("Edit",'wc_pricelevels').'</a>','edit_role',$key);
+				$delete = sprintf('&nbsp;<a href="?page=%s&role=%s">'.__("Delete",'wc_pricelevels').'</a>','delete_role',$key);
 				$table_data[$i]['actions']=$edit.' '.$delete;
 			}else{
 				$table_data[$i]['actions']='';
