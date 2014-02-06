@@ -22,8 +22,9 @@ License URI: http://www.gnu.org/licenses/gpl-3.0.html
 		
 	
 		class WC_PriceLevels {
-			
+			public $textdomain = 'WC_PriceLevels';
 			public function __construct() {
+				$textdomain = 'WC_PriceLevels';
 				include_once( 'classes/admin-role-table.php' );
 				// called only after woocommerce has finished loading
 				add_action( 'woocommerce_init', array( &$this, 'woocommerce_loaded' ) );
@@ -122,7 +123,7 @@ License URI: http://www.gnu.org/licenses/gpl-3.0.html
 				$all_roles = $wp_roles->roles;
 				$editable_roles = apply_filters('editable_roles', $all_roles);
 				
-				$testListTable = new TT_Example_List_Table();
+				$testListTable = new WC_PriceLevels_AdminRolesTable();
 				//Fetch, prepare, sort, and filter our data...
 				$testListTable->prepare_items();
 				include( untrailingslashit( plugin_dir_path( __FILE__ ). '/templates/levels_template.php'));

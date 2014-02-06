@@ -8,7 +8,7 @@ if(!class_exists('WP_List_Table')){
 
 
 
-class TT_Example_List_Table extends WP_List_Table {
+class WC_PriceLevels_AdminRolesTable extends WP_List_Table {
     
     
     function __construct(){
