@@ -7,7 +7,7 @@ WooCommerce plugin for products can be offered at different prices for different
 
 == Description ==
 
-This is an example WooCommerce plugin
+WooCommerce plugin for products can be offered at different prices for different customer roles.
 
 == Installation ==
 

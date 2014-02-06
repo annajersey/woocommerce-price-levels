@@ -1,59 +1,5 @@
 <?php
-/*
-Plugin Name: Custom List Table Example
-Plugin URI: http://www.mattvanandel.com/
-Description: A highly documented plugin that demonstrates how to create custom List Tables using official WordPress APIs.
-Version: 1.3
-Author: Matt Van Andel
-Author URI: http://www.mattvanandel.com
-License: GPL2
-*/
-/*  Copyright 2014  Matthew Van Andel  (email : matt@mattvanandel.com)
 
-    This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU General Public License, version 2, as
-    published by the Free Software Foundation.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program; if not, write to the Free Software
-    Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-*/
-
-
-
-/* == NOTICE ===================================================================
- * Please do not alter this file. Instead: make a copy of the entire plugin, 
- * rename it, and work inside the copy. If you modify this plugin directly and 
- * an update is released, your changes will be lost!
- * ========================================================================== */
-
-
-
-/*************************** LOAD THE BASE CLASS *******************************
- *******************************************************************************
- * The WP_List_Table class isn't automatically available to plugins, so we need
- * to check if it's available and load it if necessary. In this tutorial, we are
- * going to use the WP_List_Table class directly from WordPress core.
- *
- * IMPORTANT:
- * Please note that the WP_List_Table class technically isn't an official API,
- * and it could change at some point in the distant future. Should that happen,
- * I will update this plugin with the most current techniques for your reference
- * immediately.
- *
- * If you are really worried about future compatibility, you can make a copy of
- * the WP_List_Table class (file path is shown just below) to use and distribute
- * with your plugins. If you do that, just remember to change the name of the
- * class to avoid conflicts with core.
- *
- * Since I will be keeping this tutorial up-to-date for the foreseeable future,
- * I am going to work with the copy of the class provided in WordPress core.
- */
 if(!class_exists('WP_List_Table')){
     require_once( ABSPATH . 'wp-admin/includes/class-wp-list-table.php' );
 }
@@ -61,38 +7,10 @@ if(!class_exists('WP_List_Table')){
 
 
 
-/************************** CREATE A PACKAGE CLASS *****************************
- *******************************************************************************
- * Create a new list table package that extends the core WP_List_Table class.
- * WP_List_Table contains most of the framework for generating the table, but we
- * need to define and override some methods so that our data can be displayed
- * exactly the way we need it to be.
- * 
- * To display this example on a page, you will first need to instantiate the class,
- * then call $yourInstance->prepare_items() to handle any data manipulation, then
- * finally call $yourInstance->display() to render the table to the page.
- * 
- 
- */
+
 class TT_Example_List_Table extends WP_List_Table {
     
-    /** ************************************************************************
-     * Normally we would be querying data from a database and manipulating that
-     * for use in your list table. For this example, we're going to simplify it
-     * slightly and create a pre-built array. Think of this as the data that might
-     * be returned by $wpdb->query().
-     * 
-     * @var array 
-     **************************************************************************/
-	
-	 
     
-
-
-    /** ************************************************************************
-     * REQUIRED. Set up a constructor that references the parent constructor. We 
-     * use the parent reference to set some default configs.
-     ***************************************************************************/
     function __construct(){
         global $status, $page;
                  
