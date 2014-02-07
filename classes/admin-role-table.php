@@ -10,7 +10,7 @@ if(!class_exists('WP_List_Table')){
 
 class WC_PriceLevels_AdminRolesTable extends WP_List_Table {
     
-    
+    public $textdomain = 'wc_pricelevels';
     function __construct(){
         global $status, $page;
                  
@@ -128,11 +128,11 @@ class WC_PriceLevels_AdminRolesTable extends WP_List_Table {
     function get_columns(){
         $columns = array(
             'cb'        => '<input type="checkbox" />', //Render a checkbox instead of text
-            'title'     => __('Role Display Name','wc_pricelevels'),
-			'key'		=>	__('Role Key','wc_pricelevels'),
-            'number'    => __('Count of Users','wc_pricelevels'),
+            'title'     => __('Role Display Name',$this->textdomain),
+			'key'		=>	__('Role Key',$this->textdomain),
+            'number'    => __('Count of Users',$this->textdomain),
 			
-			'actions' => __('Actions','wc_pricelevels')
+			'actions' => __('Actions',$this->textdomain)
            
         );
         return $columns;
@@ -180,7 +180,7 @@ class WC_PriceLevels_AdminRolesTable extends WP_List_Table {
      **************************************************************************/
     function get_bulk_actions() {
         $actions = array(
-            'delete'    => __('Delete','wc_pricelevels')
+            'delete'    => __('Delete',$this->textdomain)
 			
         );
 		
@@ -205,7 +205,7 @@ class WC_PriceLevels_AdminRolesTable extends WP_List_Table {
 					$wp_user_search = new WP_User_Search($usersearch, $userspage, $role_key );
 					$editors = $wp_user_search->get_results();
 					$user_num = sizeof($editors);
-					if($user_num>0){ wp_die($role->name.' '.__("role still has",'wc_pricelevels').' '.$user_num.' '.__("customers / users assigned to it. You must remove all users from a role before it can be deleted.",'wc_pricelevels'));
+					if($user_num>0){ wp_die($role->name.' '.__("role still has",$this->textdomain).' '.$user_num.' '.__("customers / users assigned to it. You must remove all users from a role before it can be deleted.",$this->textdomain));
 					}else{
 					$wp_roles->remove_role($role_key);}
 				}
@@ -294,8 +294,8 @@ class WC_PriceLevels_AdminRolesTable extends WP_List_Table {
 			$editors = $wp_user_search->get_results();
 			$table_data[$i]['number']= sizeof($editors);
 			if(isset($role['capabilities']['woo_role']) && $role['capabilities']['woo_role']==1){
-				$edit = sprintf('<a href="?page=%s&role=%s">'.__("Edit",'wc_pricelevels').'</a>','edit_role',$key);
-				$delete = sprintf('&nbsp;<a href="?page=%s&role=%s">'.__("Delete",'wc_pricelevels').'</a>','delete_role',$key);
+				$edit = sprintf('<a href="?page=%s&role=%s">'.__("Edit",$this->textdomain).'</a>','edit_role',$key);
+				$delete = sprintf('&nbsp;<a href="?page=%s&role=%s">'.__("Delete",$this->textdomain).'</a>','delete_role',$key);
 				$table_data[$i]['actions']=$edit.' '.$delete;
 			}else{
 				$table_data[$i]['actions']='';
