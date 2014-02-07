@@ -12,11 +12,6 @@ License URI: http://www.gnu.org/licenses/gpl-3.0.html
 	
 	if ( ! class_exists( 'WC_PriceLevels' ) ) {
 		
-		/**
-		 * Localisation
-		 **/
-		
-	
 		class WC_PriceLevels {
 			
 			public $textdomain = 'wc_pricelevels';
@@ -55,8 +50,7 @@ License URI: http://www.gnu.org/licenses/gpl-3.0.html
 			
 			
 			public  function plugin_activate() {
-				
-			 if(!in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) )){
+				if(!in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) )){
 				deactivate_plugins(basename(__FILE__)); // Deactivate ourself
                 wp_die(__("WooCommerce Price Levels requires WooCommerce installed and activated.",$this->textdomain)); 
 			  }
