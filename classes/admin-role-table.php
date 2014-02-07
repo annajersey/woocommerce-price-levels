@@ -76,20 +76,10 @@ class WC_PriceLevels_AdminRolesTable extends WP_List_Table {
      **************************************************************************/
     function column_title($item){
         
-        //Build row actions
-		//if($item['actions']=='')
-		$actions = array();
-		// }
-		// else{
-        // $actions = array(
-            // 'edit'      => sprintf('<a href="?page=%s&action=%s&role=%s">Edit</a>',$_REQUEST['page'],'edit',$item['ID']),
-            // 'delete'    => sprintf('<a href="?page=%s&action=%s&role=%s">Delete</a>',$_REQUEST['page'],'delete',$item['ID']),
-        // );
-        // }
-        //Return the title contents
-        return sprintf('%1$s %2$s',
-            /*$1%s*/ $item['title'],
-             /*$2%s*/ $this->row_actions($actions)
+        
+        return sprintf('%1$s',
+            /*$1%s*/ $item['title']
+            
         );
     }
 
@@ -210,8 +200,7 @@ class WC_PriceLevels_AdminRolesTable extends WP_List_Table {
 					$wp_roles->remove_role($role_key);}
 				}
 			}
-			
-			 wp_redirect( get_bloginfo('url').'/wp-admin/admin.php?page=customer-levels' );
+			@wp_redirect( get_bloginfo('url').'/wp-admin/admin.php?page=customer-levels' );
         }
         
     }
@@ -269,15 +258,7 @@ class WC_PriceLevels_AdminRolesTable extends WP_List_Table {
         $this->process_bulk_action();
         
         
-        /**
-         * Instead of querying a database, we're going to fetch the example data
-         * property we created for use in this plugin. This makes this example 
-         * package slightly different than one you might build on your own. In 
-         * this example, we'll be using array manipulation to sort and paginate 
-         * our data. In a real-world implementation, you will probably want to 
-         * use sort and pagination data to build a custom query instead, as you'll
-         * be able to use your precisely-queried data immediately.
-         */
+        
 		 global $wp_roles;
 		
 		 
@@ -295,7 +276,7 @@ class WC_PriceLevels_AdminRolesTable extends WP_List_Table {
 			$table_data[$i]['number']= sizeof($editors);
 			if(isset($role['capabilities']['woo_role']) && $role['capabilities']['woo_role']==1){
 				$edit = sprintf('<a href="?page=%s&role=%s">'.__("Edit",$this->textdomain).'</a>','edit_role',$key);
-				$delete = sprintf('&nbsp;<a href="?page=%s&role=%s">'.__("Delete",$this->textdomain).'</a>','delete_role',$key);
+				$delete = sprintf('&nbsp;<a href="?action=%s&role=%s">'.__("Delete",$this->textdomain).'</a>','deleterole',$key);
 				$table_data[$i]['actions']=$edit.' '.$delete;
 			}else{
 				$table_data[$i]['actions']='';
@@ -324,18 +305,6 @@ class WC_PriceLevels_AdminRolesTable extends WP_List_Table {
         usort($data, 'usort_reorder');
         
         
-        /***********************************************************************
-         * ---------------------------------------------------------------------
-         * vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
-         * 
-         * In a real-world situation, this is where you would place your query.
-         *
-         * For information on making queries in WordPress, see this Codex entry:
-         * http://codex.wordpress.org/Class_Reference/wpdb
-         * 
-         * ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-         * ---------------------------------------------------------------------
-         **********************************************************************/
         
                 
         /**
