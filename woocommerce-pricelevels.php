@@ -52,7 +52,7 @@ License URI: http://www.gnu.org/licenses/gpl-3.0.html
 			public  function plugin_activate() {
 				if(!in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) )){
 				deactivate_plugins(basename(__FILE__)); // Deactivate ourself
-                wp_die(__("WooCommerce Price Levels requires WooCommerce installed and activated.",$this->textdomain)); 
+                wp_die(__("WooCommerce Price Levels requires WooCommerce installed and activated.",$this->textdomain).'<br /><a href="javascript:history.back(1);">'.__("<< Back",$this->textdomain).'</a>'); 
 			  }
 			}
 			
@@ -188,7 +188,7 @@ License URI: http://www.gnu.org/licenses/gpl-3.0.html
 							$wp_user_search = new WP_User_Search($usersearch, $userspage, $role_key );
 							$editors = $wp_user_search->get_results();
 							$user_num = sizeof($editors);
-							if($user_num>0){ wp_die(__("This role still has",$this->textdomain).' '.$user_num.' '.__("customers / users assigned to it. You must remove all users from a role before it can be deleted.",$this->textdomain)); }else{
+							if($user_num>0){ wp_die(__("This role still has",$this->textdomain).' '.$user_num.' '.__("customers / users assigned to it. You must remove all users from a role before it can be deleted.",$this->textdomain).'<br /><a href="javascript:history.back(1);">'.__("<< Back",$this->textdomain).'</a>'); }else{
 							$wp_roles->remove_role($role_key);}
 						}
 						

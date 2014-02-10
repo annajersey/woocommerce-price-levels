@@ -104,7 +104,7 @@ class WC_PriceLevels_AdminRolesTable extends WP_List_Table {
 					$wp_user_search = new WP_User_Search($usersearch, $userspage, $role_key );
 					$editors = $wp_user_search->get_results();
 					$user_num = sizeof($editors);
-					if($user_num>0){ wp_die($role->name.' '.__("role still has",$this->textdomain).' '.$user_num.' '.__("customers / users assigned to it. You must remove all users from a role before it can be deleted.",$this->textdomain));
+					if($user_num>0){ wp_die($role->name.' '.__("role still has",$this->textdomain).' '.$user_num.' '.__("customers / users assigned to it. You must remove all users from a role before it can be deleted.",$this->textdomain).'<br /><a href="javascript:history.back(1);">'.__("<< Back",$this->textdomain).'</a>');
 					}else{
 					$wp_roles->remove_role($role_key);}
 				}
