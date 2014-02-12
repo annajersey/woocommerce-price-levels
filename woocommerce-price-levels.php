@@ -1,12 +1,9 @@
 <?php
 /*
 Plugin Name: WooCommerce Price Levels
-Description: WooCommerce plugin for products can be offered at different prices for different customer roles.
-Version: 1.0.0
+Description: WooCommerce plugin to offer different prices per customer roles.
+Version: 1.0
 
-	
-License: GNU General Public License v3.0
-License URI: http://www.gnu.org/licenses/gpl-3.0.html
 */
 
 	
