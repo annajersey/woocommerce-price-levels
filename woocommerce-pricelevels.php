@@ -190,6 +190,8 @@ License URI: http://www.gnu.org/licenses/gpl-3.0.html
 							$user_num = sizeof($editors);
 							if($user_num>0){ wp_die(__("This role still has",$this->textdomain).' '.$user_num.' '.__("customers / users assigned to it. You must remove all users from a role before it can be deleted.",$this->textdomain).'<br /><a href="javascript:history.back(1);">'.__("<< Back",$this->textdomain).'</a>'); }else{
 							$wp_roles->remove_role($role_key);}
+						}else{
+							wp_die(__("Cannot delete roles that were not added by this plugin.",$this->textdomain).'<br /><a href="javascript:history.back(1);">'.__("<< Back",$this->textdomain).'</a>');
 						}
 						
 					wp_redirect( get_bloginfo('url').'/wp-admin/admin.php?page=customer-levels' );

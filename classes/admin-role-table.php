@@ -107,6 +107,8 @@ class WC_PriceLevels_AdminRolesTable extends WP_List_Table {
 					if($user_num>0){ wp_die($role->name.' '.__("role still has",$this->textdomain).' '.$user_num.' '.__("customers / users assigned to it. You must remove all users from a role before it can be deleted.",$this->textdomain).'<br /><a href="javascript:history.back(1);">'.__("<< Back",$this->textdomain).'</a>');
 					}else{
 					$wp_roles->remove_role($role_key);}
+				}else{
+					wp_die(__("Cannot delete roles that were not added by this plugin.",$this->textdomain).'<br /><a href="javascript:history.back(1);">'.__("<< Back",$this->textdomain).'</a>');
 				}
 			}
 			@wp_redirect( get_bloginfo('url').'/wp-admin/admin.php?page=customer-levels' );
