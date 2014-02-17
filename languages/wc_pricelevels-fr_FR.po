@@ -1,59 +1,54 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: pricelevels\n"
-"POT-Creation-Date: 2014-02-06 17:35+0200\n"
-"PO-Revision-Date: 2014-02-06 17:36+0200\n"
-"Last-Translator: \n"
+"POT-Creation-Date: 2014-02-17 11:16+0200\n"
+"PO-Revision-Date: 2014-02-17 11:18+0200\n"
+"Last-Translator: est <seth@drytr.tyu>\n"
 "Language-Team: LBI <lbitestme@gmail.com>\n"
 "Language: fr_FR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.6.3\n"
-"X-Poedit-Basepath: d:\\wamp\\www\\wordpress\\wp-content\\plugins"
-"\\woocommerce-pricelevels\\\n"
+"X-Generator: Poedit 1.6.4\n"
+"X-Poedit-Basepath: z:\\wordpress\\wp-content\\plugins\\woocommerce-"
+"pricelevels\\\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Poedit-KeywordsList: __\n"
-"X-Poedit-SearchPath-0: d:\\wamp\\www\\wordpress\\wp-content\\plugins"
-"\\woocommerce-pricelevels\n"
+"X-Poedit-SearchPath-0: z:\\wordpress\\wp-content\\plugins\\woocommerce-"
+"pricelevels\n"
 
-#: \wp-content\plugins\woocommerce-pricelevels/woocommerce-pricelevels.php:76
-msgid "WooCommerce Price Levels requires WooCommerce installed and activated."
-msgstr "Niveaux WooCommerce Prix nécessite WooCommerce installé et activé."
+#: z:\wordpress\wp-content\plugins\woocommerce-pricelevels/classes/admin-role-table.php:63
+msgid "Role Display Name"
+msgstr "Rôle nom d'affichage"
 
-#: \wp-content\plugins\woocommerce-pricelevels/woocommerce-pricelevels.php:80
-#: \wp-content\plugins\woocommerce-pricelevels/templates/levels_template.php:10
-msgid "Customer Levels"
-msgstr "Niveaux des clients"
+#: z:\wordpress\wp-content\plugins\woocommerce-pricelevels/classes/admin-role-table.php:64
+msgid "Role Key"
+msgstr "Clé de Rôle"
 
-#: \wp-content\plugins\woocommerce-pricelevels/woocommerce-pricelevels.php:89
-msgid " \tPrice"
-msgstr "\tPrix"
+#: z:\wordpress\wp-content\plugins\woocommerce-pricelevels/classes/admin-role-table.php:65
+msgid "Count of Users"
+msgstr "Le nombre d'utilisateurs"
 
-#: \wp-content\plugins\woocommerce-pricelevels/woocommerce-pricelevels.php:145
-#: \wp-content\plugins\woocommerce-pricelevels/templates/levels_template.php:10
-msgid "Add New Role"
-msgstr "Ajouter un nouveau rôle"
+#: z:\wordpress\wp-content\plugins\woocommerce-pricelevels/classes/admin-role-table.php:66
+#: z:\wordpress\wp-content\plugins\woocommerce-pricelevels/woocommerce-price-levels.php:186
+msgid "Enable Price Levels"
+msgstr "Activer niveaux de prix"
 
-#: \wp-content\plugins\woocommerce-pricelevels/woocommerce-pricelevels.php:148
-#: \wp-content\plugins\woocommerce-pricelevels/woocommerce-pricelevels.php:178
-msgid "Role Name"
-msgstr "rôle Nom"
+#: z:\wordpress\wp-content\plugins\woocommerce-pricelevels/classes/admin-role-table.php:67
+msgid "Actions"
+msgstr "Actes"
 
-#: \wp-content\plugins\woocommerce-pricelevels/woocommerce-pricelevels.php:175
-msgid "Edit Role"
-msgstr "Modifier Rôle"
+#: z:\wordpress\wp-content\plugins\woocommerce-pricelevels/classes/admin-role-table.php:90
+#: z:\wordpress\wp-content\plugins\woocommerce-pricelevels/classes/admin-role-table.php:165
+msgid "Delete"
+msgstr "Effacer"
 
-#: \wp-content\plugins\woocommerce-pricelevels/woocommerce-pricelevels.php:182
-msgid "Save"
-msgstr "Sauver"
-
-#: \wp-content\plugins\woocommerce-pricelevels/woocommerce-pricelevels.php:197
-msgid "This role still has"
+#: z:\wordpress\wp-content\plugins\woocommerce-pricelevels/classes/admin-role-table.php:110
+msgid "role still has"
 msgstr "Ce rôle a encore"
 
-#: \wp-content\plugins\woocommerce-pricelevels/woocommerce-pricelevels.php:197
-#: \wp-content\plugins\woocommerce-pricelevels/classes/admin-role-table.php:208
+#: z:\wordpress\wp-content\plugins\woocommerce-pricelevels/classes/admin-role-table.php:110
+#: z:\wordpress\wp-content\plugins\woocommerce-pricelevels/woocommerce-price-levels.php:207
 msgid ""
 "customers / users assigned to it. You must remove all users from a role "
 "before it can be deleted."
@@ -61,31 +56,73 @@ msgstr ""
 "clients / utilisateurs qui lui sont confiées. Vous devez supprimer tous les "
 "utilisateurs d'un rôle avant d'être supprimé."
 
-#: \wp-content\plugins\woocommerce-pricelevels/classes/admin-role-table.php:131
-msgid "Role Display Name"
-msgstr "Rôle nom d'affichage"
+#: z:\wordpress\wp-content\plugins\woocommerce-pricelevels/classes/admin-role-table.php:110
+#: z:\wordpress\wp-content\plugins\woocommerce-pricelevels/classes/admin-role-table.php:114
+#: z:\wordpress\wp-content\plugins\woocommerce-pricelevels/woocommerce-price-levels.php:52
+#: z:\wordpress\wp-content\plugins\woocommerce-pricelevels/woocommerce-price-levels.php:207
+#: z:\wordpress\wp-content\plugins\woocommerce-pricelevels/woocommerce-price-levels.php:210
+msgid "<< Back"
+msgstr "Arrière"
 
-#: \wp-content\plugins\woocommerce-pricelevels/classes/admin-role-table.php:132
-msgid "Role Key"
-msgstr "Clé de Rôle"
+#: z:\wordpress\wp-content\plugins\woocommerce-pricelevels/classes/admin-role-table.php:114
+#: z:\wordpress\wp-content\plugins\woocommerce-pricelevels/woocommerce-price-levels.php:210
+msgid "Cannot delete roles that were not added by this plugin."
+msgstr ""
+"Vous ne pouvez pas supprimer des rôles qui n'ont pas été ajoutées par ce "
+"plugin."
 
-#: \wp-content\plugins\woocommerce-pricelevels/classes/admin-role-table.php:133
-msgid "Count of Users"
-msgstr "Le nombre d'utilisateurs"
-
-#: \wp-content\plugins\woocommerce-pricelevels/classes/admin-role-table.php:135
-msgid "Actions"
-msgstr "Actes"
-
-#: \wp-content\plugins\woocommerce-pricelevels/classes/admin-role-table.php:183
-#: \wp-content\plugins\woocommerce-pricelevels/classes/admin-role-table.php:298
-msgid "Delete"
-msgstr "Effacer"
-
-#: \wp-content\plugins\woocommerce-pricelevels/classes/admin-role-table.php:208
-msgid "role still has"
-msgstr "Ce rôle a encore"
-
-#: \wp-content\plugins\woocommerce-pricelevels/classes/admin-role-table.php:297
+#: z:\wordpress\wp-content\plugins\woocommerce-pricelevels/classes/admin-role-table.php:163
 msgid "Edit"
 msgstr "Modifier"
+
+#: z:\wordpress\wp-content\plugins\woocommerce-pricelevels/classes/admin-role-table.php:170
+msgid "Yes"
+msgstr "Oui"
+
+#: z:\wordpress\wp-content\plugins\woocommerce-pricelevels/classes/admin-role-table.php:170
+msgid "No"
+msgstr "Aucun "
+
+#: z:\wordpress\wp-content\plugins\woocommerce-pricelevels/templates/levels_template.php:10
+#: z:\wordpress\wp-content\plugins\woocommerce-pricelevels/woocommerce-price-levels.php:58
+msgid "Customer Levels"
+msgstr "Niveaux des clients"
+
+#: z:\wordpress\wp-content\plugins\woocommerce-pricelevels/templates/levels_template.php:10
+#: z:\wordpress\wp-content\plugins\woocommerce-pricelevels/woocommerce-price-levels.php:136
+msgid "Add New Role"
+msgstr "Ajouter un nouveau rôle"
+
+#: z:\wordpress\wp-content\plugins\woocommerce-pricelevels/woocommerce-price-levels.php:52
+msgid "WooCommerce Price Levels requires WooCommerce installed and activated."
+msgstr "Niveaux WooCommerce Prix nécessite WooCommerce installé et activé."
+
+#: z:\wordpress\wp-content\plugins\woocommerce-pricelevels/woocommerce-price-levels.php:59
+msgid "Add New Customer Role"
+msgstr "Ajouter un nouveau rôle"
+
+#: z:\wordpress\wp-content\plugins\woocommerce-pricelevels/woocommerce-price-levels.php:60
+msgid "Edit Customer Role"
+msgstr "Modifier Rôle"
+
+#: z:\wordpress\wp-content\plugins\woocommerce-pricelevels/woocommerce-price-levels.php:69
+msgid "Price"
+msgstr "Prix"
+
+#: z:\wordpress\wp-content\plugins\woocommerce-pricelevels/woocommerce-price-levels.php:139
+#: z:\wordpress\wp-content\plugins\woocommerce-pricelevels/woocommerce-price-levels.php:183
+msgid "Role Name"
+msgstr "rôle Nom"
+
+#: z:\wordpress\wp-content\plugins\woocommerce-pricelevels/woocommerce-price-levels.php:143
+#: z:\wordpress\wp-content\plugins\woocommerce-pricelevels/woocommerce-price-levels.php:191
+msgid "Save"
+msgstr "Sauver"
+
+#: z:\wordpress\wp-content\plugins\woocommerce-pricelevels/woocommerce-price-levels.php:180
+msgid "Edit Role"
+msgstr "Modifier Rôle"
+
+#: z:\wordpress\wp-content\plugins\woocommerce-pricelevels/woocommerce-price-levels.php:207
+msgid "This role still has"
+msgstr "Ce rôle a encore"

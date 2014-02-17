@@ -29,6 +29,7 @@ class WC_PriceLevels_AdminRolesTable extends WP_List_Table {
         switch($column_name){
             case 'number':
             case 'actions':
+			case 'priceon':
 			case 'key':
                 return $item[$column_name];
             default:
@@ -62,7 +63,7 @@ class WC_PriceLevels_AdminRolesTable extends WP_List_Table {
             'title'     => __('Role Display Name',$this->textdomain),
 			'key'		=>	__('Role Key',$this->textdomain),
             'number'    => __('Count of Users',$this->textdomain),
-			
+			'priceon'    => __('Enable Price Levels',$this->textdomain),
 			'actions' => __('Actions',$this->textdomain)
            
         );
@@ -75,6 +76,7 @@ class WC_PriceLevels_AdminRolesTable extends WP_List_Table {
         $sortable_columns = array(
             'title'     => array('title',false),     //true means it's already sorted
             'number'    => array('number',false),
+			'priceon'    => array('priceon',false),
 			'key'    => array('key',false)
 			//'actions'    => array('actions',false)
         );
@@ -85,7 +87,8 @@ class WC_PriceLevels_AdminRolesTable extends WP_List_Table {
     
     function get_bulk_actions() {
         $actions = array(
-            'delete'    => __('Delete',$this->textdomain)
+            'delete'    => __('Delete',$this->textdomain),
+		
 			
         );
 		
@@ -157,13 +160,14 @@ class WC_PriceLevels_AdminRolesTable extends WP_List_Table {
 			$wp_user_search = new WP_User_Search($usersearch, $userspage, $key);
 			$editors = $wp_user_search->get_results();
 			$table_data[$i]['number']= sizeof($editors);
+			$edit = sprintf('<a href="?page=%s&role=%s">'.__("Edit",$this->textdomain).'</a>','edit_role',$key);
 			if(isset($role['capabilities']['woo_role']) && $role['capabilities']['woo_role']==1){
-				$edit = sprintf('<a href="?page=%s&role=%s">'.__("Edit",$this->textdomain).'</a>','edit_role',$key);
-				$delete = sprintf('&nbsp;<a href="?action=%s&role=%s">'.__("Delete",$this->textdomain).'</a>','deleterole',$key);
+				$delete = sprintf('&nbsp;<a class="delete" href="?action=%s&role=%s">'.__("Delete",$this->textdomain).'</a>','deleterole',$key);
 				$table_data[$i]['actions']=$edit.' '.$delete;
 			}else{
-				$table_data[$i]['actions']='';
+				$table_data[$i]['actions']=$edit;
 			}
+			$table_data[$i]['priceon']= (isset($role['priceon']) && $role['priceon']==1) ? __("Yes",$this->textdomain) : __("No",$this->textdomain) ;
 			$i++;
 		 }
 		 

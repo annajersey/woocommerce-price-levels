@@ -65,8 +65,9 @@ Version: 1.0
 				global $wp_roles;
 				$all_roles = $wp_roles->roles;
 				foreach($all_roles as $key=>$role){
-					woocommerce_wp_text_input( array( 'id' => $key.'_price', 'class' => 'wc_input_price short', 'label' => $role['name'].' '
-					.__('Price',$this->textdomain) . ' (' . get_woocommerce_currency_symbol() . ')' ) );
+					if (isset($role['priceon']) && $role['priceon']==1){
+						woocommerce_wp_text_input( array( 'id' => $key.'_price', 'class' => 'wc_input_price short', 'label' => $role['name'].' '.__('Price',$this->textdomain) . ' (' . get_woocommerce_currency_symbol() . ')' ) );
+					}
 				}
 			}
 			
@@ -87,14 +88,15 @@ Version: 1.0
 			
 			
 			public function return_custom_price_level ($price, $product) {
-				 global $post;
+				 global $post; global $wp_roles;
 				$user_id = get_current_user_id();
 				$user = new WP_User( $user_id );
 				$role = $user->roles[0];
 				//echo($role);
 				$post_id = $product->id;
 				//echo $post_id;
-				if($role){
+				$all_roles = $wp_roles->roles;
+				if($role && isset($all_roles[$role]['priceon']) && $all_roles[$role]['priceon']==1){
 					$new_price = get_post_meta($post_id,$role.'_price' , true);
 					if(is_numeric($new_price)) return $new_price;
 				}
@@ -144,14 +146,16 @@ Version: 1.0
 				
 			 }	
 			  public function editrole_admin_action(){
-				if ( $_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['role_name']) && isset($_POST['role_key'])){
+				if ( $_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['role_key'])){
 					$role_key=$_POST['role_key'];
 					$role=get_role( $role_key );
-					if(isset($role->capabilities['woo_role']) && $role->capabilities['woo_role']==1){
-						$val = get_option( 'wp_user_roles' );
+					$val = get_option( 'wp_user_roles' );
+					if(isset($role->capabilities['woo_role']) && $role->capabilities['woo_role']==1 && isset($_POST['role_name']) && $_POST['role_name']!=''){
 						$val[$role_key]['name'] = $_POST['role_name'];
 						update_option( 'wp_user_roles', $val );  
 					}
+					$val[$role_key]['priceon'] = $_POST['priceon'];
+					update_option( 'wp_user_roles', $val ); 
 					wp_redirect( get_bloginfo('url').'/wp-admin/admin.php?page=customer-levels' );
 				} 
 			  }
@@ -160,12 +164,27 @@ Version: 1.0
 				global $wp_roles;
 				$all_roles = $wp_roles->roles;
 				$role_key=$_GET['role'];
+				$role=get_role( $role_key );
+				if(isset($role->capabilities['woo_role']) && $role->capabilities['woo_role']==1){
+					$disabled='';
+				}else{
+					$disabled='disabled="disabled"';
+				}
+				if(isset($all_roles[$role_key]['priceon']) && $all_roles[$role_key]['priceon']==1){
+					$priceon='checked="checked"';
+				}else{
+					$priceon='';
+				}
+				
 				echo '
 				<h2>'.__("Edit Role",$this->textdomain).'</h2>
 				<form method="post" action="'.admin_url( 'admin.php' ).'">
 					<div id="titlewrap">
 					<label for="title" id="title-prompt-text" class="">'.__("Role Name",$this->textdomain).'</label>
-					<input type="text" autocomplete="off" id="title" value="'.$all_roles[$role_key]['name'].'" size="30" name="role_name">
+					<input type="text" '.$disabled.' autocomplete="off" id="title" value="'.$all_roles[$role_key]['name'].'" size="30" name="role_name">
+					<br /><br />
+					<label for="priceon" id="priceon-prompt-text" class="">'.__("Enable Price Levels",$this->textdomain).'</label>&nbsp;
+					<input type="checkbox" id="priceon"  name="priceon" value="1" '.$priceon.'/>
 					<input type="hidden" name="role_key" value="'.$role_key.'">
 					</div><br />
 					 <input type="hidden" name="action" value="editrole" />

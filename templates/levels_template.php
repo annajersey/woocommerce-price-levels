@@ -22,7 +22,7 @@
     </div>
 <script>
 jQuery('#the-list tr').each(function(){
-	if(jQuery(this).find('td.actions').html()==''){
+	if(jQuery(this).find('a.delete').length==0){
 		jQuery(this).css('background','#d2d2d2');
 	}
 });
