@@ -62,6 +62,8 @@ Version: 1.0
 			
 			
 			function price_for_roles() {
+				woocommerce_wp_text_input( array( 'id' => 'wc_pl_cost', 'class' => 'wc_input_price short', 'label' => __('Cost Price',$this->textdomain) . ' (' . get_woocommerce_currency_symbol() . ')' ) );
+				woocommerce_wp_text_input( array( 'id' => 'wc_pl_msrp', 'class' => 'wc_input_price short', 'label' => __('MSRP',$this->textdomain) . ' (' . get_woocommerce_currency_symbol() . ')' ) );
 				global $wp_roles;
 				$all_roles = $wp_roles->roles;
 				foreach($all_roles as $key=>$role){
@@ -83,7 +85,17 @@ Version: 1.0
 						update_post_meta( $product_id,$key.'_price', $_POST[$key.'_price'] );
 						elseif(empty( $_POST[$key.'_price'] )) delete_post_meta( $product_id, $key.'_price' );
 					} else delete_post_meta( $product_id, $key.'_price' );
-				}	
+				}
+				if ( isset( $_POST['wc_pl_cost'] ) ) { 
+						if ( is_numeric( $_POST['wc_pl_cost'] ) )  
+						update_post_meta( $product_id,'wc_pl_cost', $_POST['wc_pl_cost'] );
+						elseif(empty( $_POST['wc_pl_cost'] )) delete_post_meta( $product_id, 'wc_pl_cost' );
+				} else delete_post_meta( $product_id, 'wc_pl_cost');
+				if ( isset( $_POST['wc_pl_msrp'] ) ) { 
+						if ( is_numeric( $_POST['wc_pl_msrp'] ) )  
+						update_post_meta( $product_id,'wc_pl_msrp', $_POST['wc_pl_msrp'] );
+						elseif(empty( $_POST['wc_pl_msrp'] )) delete_post_meta( $product_id, 'wc_pl_msrp' );
+				} else delete_post_meta( $product_id, 'wc_pl_msrp');
 			}
 			
 			
@@ -97,8 +109,53 @@ Version: 1.0
 				//echo $post_id;
 				$all_roles = $wp_roles->roles;
 				if($role && isset($all_roles[$role]['priceon']) && $all_roles[$role]['priceon']==1){
+					$percent=(float)$all_roles[$role]['price_percent'];
+					if($all_roles[$role]['price_type']=='c'){
+						switch($all_roles[$role]['price_type2']){
+							case 1: //Regular Price 
+								if(!empty($all_roles[$role]['price_roles'])){
+									$role_price = get_post_meta($post_id,$all_roles[$role]['price_roles'].'_price' , true);
+									if(!empty($role_price)){
+										if($all_roles[$role]['price_sign']=='+'){
+											$new_price=$role_price+($role_price*$percent/100);
+											if(is_numeric($new_price)) return $new_price;
+										}elseif($all_roles[$role]['price_sign']=='-'){
+											$new_price=$role_price-($role_price*$percent/100);
+											if(is_numeric($new_price)) return $new_price;
+										}
+									}
+								}
+								break;
+							case 2: //Cost
+								$cost_price=get_post_meta($post_id,'wc_pl_cost', true);
+								if(is_numeric($cost_price)){
+									if($all_roles[$role]['price_sign']=='+'){
+											$new_price=$cost_price+($cost_price*$percent/100);
+											if(is_numeric($new_price)) return $new_price;
+									}elseif($all_roles[$role]['price_sign']=='-'){
+											$new_price=$cost_price-($cost_price*$percent/100);
+											if(is_numeric($new_price)) return $new_price;
+									}
+								}
+							break;
+							case 3: //MSRP
+								$msrp=get_post_meta($post_id,'wc_pl_msrp', true);
+								if(is_numeric($msrp)){
+									if($all_roles[$role]['price_sign']=='+'){
+											$new_price=$msrp+($msrp*$all_roles[$role]['price_percent']/100);
+											if(is_numeric($new_price)) return $new_price;
+									}elseif($all_roles[$role]['price_sign']=='-'){
+											$new_price=$msrp-($msrp*$all_roles[$role]['price_percent']/100);
+											if(is_numeric($new_price)) return $new_price;
+									}
+								}
+							break;
+						}
+					}
+					
 					$new_price = get_post_meta($post_id,$role.'_price' , true);
 					if(is_numeric($new_price)) return $new_price;
+					
 				}
 				return $price;
 			}
@@ -155,6 +212,22 @@ Version: 1.0
 						update_option( 'wp_user_roles', $val );  
 					}
 					$val[$role_key]['priceon'] = $_POST['priceon'];
+					if($_POST['priceon']!=1){ 
+						global $wp_roles;
+						$all_roles = $wp_roles->roles;
+						foreach($all_roles as $key=>$role){
+							if($role['price_roles']==$role_key){
+								wp_die(__("Can't disable Price Levels: ",$this->textdomain).$role['name'].__(" role still uses this role to calculate price.",$this->textdomain).'<br /><a href="javascript:history.back(1);">'.__("<< Back",$this->textdomain).'</a>');
+							}
+						}
+					}
+					$val[$role_key]['price_type'] = $_POST['price_type'];
+					if($_POST['price_type']=='c'){
+						$val[$role_key]['price_type2'] = $_POST['price_type2'];
+						$val[$role_key]['price_sign'] = $_POST['price_sign'];
+						$val[$role_key]['price_percent'] = $_POST['price_percent'];
+						if($_POST['price_type2']==1){$val[$role_key]['price_roles'] = $_POST['price_roles'];}
+					}
 					update_option( 'wp_user_roles', $val ); 
 					wp_redirect( get_bloginfo('url').'/wp-admin/admin.php?page=customer-levels' );
 				} 
@@ -175,24 +248,17 @@ Version: 1.0
 				}else{
 					$priceon='';
 				}
+				if(isset($all_roles[$role_key]['price_type']) && $all_roles[$role_key]['price_type']=='c'){
+					$cal_price='selected="selected"';
+					$un_price='';
+				}else{
+					$un_price='selected="selected"';
+					$cal_price='';
+				}
+				//echo '<pre>'; print_R($all_roles[$role_key]); echo '</pre>';
+				include( untrailingslashit( plugin_dir_path( __FILE__ ). '/templates/edit_role.php'));
 				
-				echo '
-				<h2>'.__("Edit Role",$this->textdomain).'</h2>
-				<form method="post" action="'.admin_url( 'admin.php' ).'">
-					<div id="titlewrap">
-					<label for="title" id="title-prompt-text" class="">'.__("Role Name",$this->textdomain).'</label>
-					<input type="text" '.$disabled.' autocomplete="off" id="title" value="'.$all_roles[$role_key]['name'].'" size="30" name="role_name">
-					<br /><br />
-					<label for="priceon" id="priceon-prompt-text" class="">'.__("Enable Price Levels",$this->textdomain).'</label>&nbsp;
-					<input type="checkbox" id="priceon"  name="priceon" value="1" '.$priceon.'/>
-					<input type="hidden" name="role_key" value="'.$role_key.'">
-					</div><br />
-					 <input type="hidden" name="action" value="editrole" />
-					<input id="publish" class="button button-primary button-large" type="submit" accesskey="p" value="'.__("Save",$this->textdomain).'" name="publish">
-				</form>';
-				
-				
-			 }
+			}
 			 
 			 
 			 	public function deleterole_admin_action() {
