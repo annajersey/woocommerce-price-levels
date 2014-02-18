@@ -267,6 +267,12 @@ Version: 1.0
 						$role_key=$_GET['role'];
 						$role=get_role( $role_key );
 						if(isset($role->capabilities['woo_role']) && $role->capabilities['woo_role']==1){
+							$all_roles = $wp_roles->roles;
+							foreach($all_roles as $key=>$role){
+								if($role['price_roles']==$role_key){
+									wp_die(__("Can't delete: ",$this->textdomain).$role['name'].__(" role still uses this role to calculate price.",$this->textdomain).'<br /><a href="javascript:history.back(1);">'.__("<< Back",$this->textdomain).'</a>');
+								}
+							}
 							$wp_user_search = new WP_User_Search($usersearch, $userspage, $role_key );
 							$editors = $wp_user_search->get_results();
 							$user_num = sizeof($editors);
