@@ -103,12 +103,19 @@ class WC_PriceLevels_AdminRolesTable extends WP_List_Table {
         if( 'delete'===$this->current_action() ) {
 			foreach($_REQUEST['role'] as $role_key){
 				$role=get_role( $role_key );
-				if(isset($role->capabilities['woo_role']) && $role->capabilities['woo_role']==1){
+				if(isset($role->capabilities['woo_role']) && $role->capabilities['woo_role']==1){ 
 					$wp_user_search = new WP_User_Search($usersearch, $userspage, $role_key );
 					$editors = $wp_user_search->get_results();
 					$user_num = sizeof($editors);
 					if($user_num>0){ wp_die($role->name.' '.__("role still has",$this->textdomain).' '.$user_num.' '.__("customers / users assigned to it. You must remove all users from a role before it can be deleted.",$this->textdomain).'<br /><a href="javascript:history.back(1);">'.__("<< Back",$this->textdomain).'</a>');
+					
 					}else{
+					$all_roles = $wp_roles->roles;
+					foreach($all_roles as $key=>$role1){
+						if($role1['price_type2']=='pricerole_'.$role_key && $role1['price_type']=='c' && $role1['priceon']==1){
+							wp_die(__("Can't delete: ",$this->textdomain).$role1['name'].__(" role still uses this role to calculate price.",$this->textdomain).'<br /><a href="javascript:history.back(1);">'.__("<< Back",$this->textdomain).'</a>');
+						}
+					} 
 					$wp_roles->remove_role($role_key);}
 				}else{
 					wp_die(__("Cannot delete roles that were not added by this plugin.",$this->textdomain).'<br /><a href="javascript:history.back(1);">'.__("<< Back",$this->textdomain).'</a>');

@@ -1,10 +1,10 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: pricelevels\n"
-"POT-Creation-Date: 2014-02-18 11:16+0200\n"
-"PO-Revision-Date: 2014-02-18 11:16+0200\n"
+"POT-Creation-Date: 2014-02-24 12:39+0200\n"
+"PO-Revision-Date: 2014-02-24 12:40+0200\n"
 "Last-Translator: est <seth@drytr.tyu>\n"
-"Language-Team: LBI <lbitestme@gmail.com>\n"
+"Language-Team: \n"
 "Language: fr_FR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -30,7 +30,7 @@ msgid "Count of Users"
 msgstr "Le nombre d'utilisateurs"
 
 #: z:\wordpress\wp-content\plugins\woocommerce-pricelevels/classes/admin-role-table.php:66
-#: z:\wordpress\wp-content\plugins\woocommerce-pricelevels/templates/edit_role.php:14
+#: z:\wordpress\wp-content\plugins\woocommerce-pricelevels/templates/edit_role.php:18
 msgid "Enable Price Levels"
 msgstr "Activer niveaux de prix"
 
@@ -39,7 +39,7 @@ msgid "Actions"
 msgstr "Actes"
 
 #: z:\wordpress\wp-content\plugins\woocommerce-pricelevels/classes/admin-role-table.php:90
-#: z:\wordpress\wp-content\plugins\woocommerce-pricelevels/classes/admin-role-table.php:165
+#: z:\wordpress\wp-content\plugins\woocommerce-pricelevels/classes/admin-role-table.php:171
 msgid "Delete"
 msgstr "Effacer"
 
@@ -48,7 +48,7 @@ msgid "role still has"
 msgstr "Ce rôle a encore"
 
 #: z:\wordpress\wp-content\plugins\woocommerce-pricelevels/classes/admin-role-table.php:110
-#: z:\wordpress\wp-content\plugins\woocommerce-pricelevels/woocommerce-price-levels.php:279
+#: z:\wordpress\wp-content\plugins\woocommerce-pricelevels/woocommerce-price-levels.php:310
 msgid ""
 "customers / users assigned to it. You must remove all users from a role "
 "before it can be deleted."
@@ -58,44 +58,76 @@ msgstr ""
 
 #: z:\wordpress\wp-content\plugins\woocommerce-pricelevels/classes/admin-role-table.php:110
 #: z:\wordpress\wp-content\plugins\woocommerce-pricelevels/classes/admin-role-table.php:114
+#: z:\wordpress\wp-content\plugins\woocommerce-pricelevels/classes/admin-role-table.php:120
 #: z:\wordpress\wp-content\plugins\woocommerce-pricelevels/woocommerce-price-levels.php:52
-#: z:\wordpress\wp-content\plugins\woocommerce-pricelevels/woocommerce-price-levels.php:220
-#: z:\wordpress\wp-content\plugins\woocommerce-pricelevels/woocommerce-price-levels.php:273
-#: z:\wordpress\wp-content\plugins\woocommerce-pricelevels/woocommerce-price-levels.php:279
-#: z:\wordpress\wp-content\plugins\woocommerce-pricelevels/woocommerce-price-levels.php:282
+#: z:\wordpress\wp-content\plugins\woocommerce-pricelevels/woocommerce-price-levels.php:246
+#: z:\wordpress\wp-content\plugins\woocommerce-pricelevels/woocommerce-price-levels.php:304
+#: z:\wordpress\wp-content\plugins\woocommerce-pricelevels/woocommerce-price-levels.php:310
+#: z:\wordpress\wp-content\plugins\woocommerce-pricelevels/woocommerce-price-levels.php:313
 msgid "<< Back"
 msgstr "Arrière"
 
 #: z:\wordpress\wp-content\plugins\woocommerce-pricelevels/classes/admin-role-table.php:114
-#: z:\wordpress\wp-content\plugins\woocommerce-pricelevels/woocommerce-price-levels.php:282
+#: z:\wordpress\wp-content\plugins\woocommerce-pricelevels/woocommerce-price-levels.php:304
+msgid "Can't delete: "
+msgstr "Vous ne pouvez pas supprimer:"
+
+#: z:\wordpress\wp-content\plugins\woocommerce-pricelevels/classes/admin-role-table.php:114
+#: z:\wordpress\wp-content\plugins\woocommerce-pricelevels/woocommerce-price-levels.php:246
+#: z:\wordpress\wp-content\plugins\woocommerce-pricelevels/woocommerce-price-levels.php:304
+msgid " role still uses this role to calculate price."
+msgstr "rôle utilise encore ce rôle pour calculer le prix."
+
+#: z:\wordpress\wp-content\plugins\woocommerce-pricelevels/classes/admin-role-table.php:120
+#: z:\wordpress\wp-content\plugins\woocommerce-pricelevels/woocommerce-price-levels.php:313
 msgid "Cannot delete roles that were not added by this plugin."
 msgstr ""
 "Vous ne pouvez pas supprimer des rôles qui n'ont pas été ajoutées par ce "
 "plugin."
 
-#: z:\wordpress\wp-content\plugins\woocommerce-pricelevels/classes/admin-role-table.php:163
+#: z:\wordpress\wp-content\plugins\woocommerce-pricelevels/classes/admin-role-table.php:169
 msgid "Edit"
 msgstr "Modifier"
 
-#: z:\wordpress\wp-content\plugins\woocommerce-pricelevels/classes/admin-role-table.php:170
+#: z:\wordpress\wp-content\plugins\woocommerce-pricelevels/classes/admin-role-table.php:176
 msgid "Yes"
 msgstr "Oui"
 
-#: z:\wordpress\wp-content\plugins\woocommerce-pricelevels/classes/admin-role-table.php:170
+#: z:\wordpress\wp-content\plugins\woocommerce-pricelevels/classes/admin-role-table.php:176
 msgid "No"
 msgstr "Aucun "
 
-#: z:\wordpress\wp-content\plugins\woocommerce-pricelevels/templates/edit_role.php:8
+#: z:\wordpress\wp-content\plugins\woocommerce-pricelevels/templates/edit_role.php:12
 msgid "Edit Role"
 msgstr "Modifier Rôle"
 
-#: z:\wordpress\wp-content\plugins\woocommerce-pricelevels/templates/edit_role.php:11
-#: z:\wordpress\wp-content\plugins\woocommerce-pricelevels/woocommerce-price-levels.php:196
+#: z:\wordpress\wp-content\plugins\woocommerce-pricelevels/templates/edit_role.php:15
+#: z:\wordpress\wp-content\plugins\woocommerce-pricelevels/woocommerce-price-levels.php:222
 msgid "Role Name"
 msgstr "rôle Nom"
 
-#: z:\wordpress\wp-content\plugins\woocommerce-pricelevels/templates/edit_role.php:47
-#: z:\wordpress\wp-content\plugins\woocommerce-pricelevels/woocommerce-price-levels.php:200
+#: z:\wordpress\wp-content\plugins\woocommerce-pricelevels/templates/edit_role.php:23
+msgid "Price Type"
+msgstr "Prix ​​de revient"
+
+#: z:\wordpress\wp-content\plugins\woocommerce-pricelevels/templates/edit_role.php:31
+msgid "Calculation Source"
+msgstr "Calcul Source"
+
+#: z:\wordpress\wp-content\plugins\woocommerce-pricelevels/templates/edit_role.php:46
+msgid "Type"
+msgstr "Type"
+
+#: z:\wordpress\wp-content\plugins\woocommerce-pricelevels/templates/edit_role.php:53
+msgid "Amount"
+msgstr "Montant"
+
+#: z:\wordpress\wp-content\plugins\woocommerce-pricelevels/templates/edit_role.php:57
+msgid "Enable Price Override on Product Page"
+msgstr "Activer Ajustement de prix sur la page du produit"
+
+#: z:\wordpress\wp-content\plugins\woocommerce-pricelevels/templates/edit_role.php:65
+#: z:\wordpress\wp-content\plugins\woocommerce-pricelevels/woocommerce-price-levels.php:226
 msgid "Save"
 msgstr "Sauver"
 
@@ -105,7 +137,7 @@ msgid "Customer Levels"
 msgstr "Niveaux des clients"
 
 #: z:\wordpress\wp-content\plugins\woocommerce-pricelevels/templates/levels_template.php:10
-#: z:\wordpress\wp-content\plugins\woocommerce-pricelevels/woocommerce-price-levels.php:193
+#: z:\wordpress\wp-content\plugins\woocommerce-pricelevels/woocommerce-price-levels.php:219
 msgid "Add New Role"
 msgstr "Ajouter un nouveau rôle"
 
@@ -129,23 +161,15 @@ msgstr "Prix ​​de revient"
 msgid "MSRP"
 msgstr "PDSF"
 
-#: z:\wordpress\wp-content\plugins\woocommerce-pricelevels/woocommerce-price-levels.php:71
+#: z:\wordpress\wp-content\plugins\woocommerce-pricelevels/woocommerce-price-levels.php:72
+#: z:\wordpress\wp-content\plugins\woocommerce-pricelevels/woocommerce-price-levels.php:74
 msgid "Price"
 msgstr "Prix"
 
-#: z:\wordpress\wp-content\plugins\woocommerce-pricelevels/woocommerce-price-levels.php:220
+#: z:\wordpress\wp-content\plugins\woocommerce-pricelevels/woocommerce-price-levels.php:246
 msgid "Can't disable Price Levels: "
 msgstr "Vous ne pouvez pas désactiver les niveaux de prix:"
 
-#: z:\wordpress\wp-content\plugins\woocommerce-pricelevels/woocommerce-price-levels.php:220
-#: z:\wordpress\wp-content\plugins\woocommerce-pricelevels/woocommerce-price-levels.php:273
-msgid " role still uses this role to calculate price."
-msgstr "rôle utilise encore ce rôle pour calculer le prix."
-
-#: z:\wordpress\wp-content\plugins\woocommerce-pricelevels/woocommerce-price-levels.php:273
-msgid "Can't delete: "
-msgstr "Vous ne pouvez pas supprimer:"
-
-#: z:\wordpress\wp-content\plugins\woocommerce-pricelevels/woocommerce-price-levels.php:279
+#: z:\wordpress\wp-content\plugins\woocommerce-pricelevels/woocommerce-price-levels.php:310
 msgid "This role still has"
 msgstr "Ce rôle a encore"

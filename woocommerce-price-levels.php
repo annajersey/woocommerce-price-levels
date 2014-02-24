@@ -68,7 +68,11 @@ Version: 1.0
 				$all_roles = $wp_roles->roles;
 				foreach($all_roles as $key=>$role){
 					if (isset($role['priceon']) && $role['priceon']==1){
-						woocommerce_wp_text_input( array( 'id' => $key.'_price', 'class' => 'wc_input_price short', 'label' => $role['name'].' '.__('Price',$this->textdomain) . ' (' . get_woocommerce_currency_symbol() . ')' ) );
+						if (isset($role['price_type']) && $role['price_type']=='c' && empty($role['priceover'])){
+							echo '<p class="form-field another_test_price_field "><label for="another_test_price">'.$role['name'].' '.__('Price',$this->textdomain) . ' (' . get_woocommerce_currency_symbol() . ')'.'</label>Calculated </p>';
+						}
+						else{woocommerce_wp_text_input( array( 'id' => $key.'_price', 'class' => 'wc_input_price short', 'label' => $role['name'].' '.__('Price',$this->textdomain) . ' (' . get_woocommerce_currency_symbol() . ')' ) );
+						}
 					}
 				}
 			}
@@ -80,6 +84,9 @@ Version: 1.0
 				global $wp_roles;
 				$all_roles = $wp_roles->roles;
 				foreach($all_roles as $key=>$role){
+					if (isset($role['price_type']) && $role['price_type']=='c' && empty($role['priceover'])){
+						continue;
+					}
 					if ( isset( $_POST[$key.'_price'] ) ) { 
 						if ( is_numeric( $_POST[$key.'_price'] ) )  
 						update_post_meta( $product_id,$key.'_price', $_POST[$key.'_price'] );
@@ -108,21 +115,22 @@ Version: 1.0
 				$post_id = $product->id;
 				//echo $post_id;
 				$all_roles = $wp_roles->roles;
+				
 				if($role && isset($all_roles[$role]['priceon']) && $all_roles[$role]['priceon']==1){
 					$percent=(float)$all_roles[$role]['price_percent'];
-					if($all_roles[$role]['price_type']=='c'){
+					$check_price = get_post_meta($post_id,$role.'_price' , true);
+					
+					if($all_roles[$role]['price_type']=='c' &&  (empty($all_roles[$role]['priceover']) || ($all_roles[$role]['priceover']==1 && is_numeric($check_price)==false))){
 						switch($all_roles[$role]['price_type2']){
 							case 1: //Regular Price 
-								if(!empty($all_roles[$role]['price_roles'])){
-									$role_price = get_post_meta($post_id,$all_roles[$role]['price_roles'].'_price' , true);
-									if(!empty($role_price)){
-										if($all_roles[$role]['price_sign']=='+'){
-											$new_price=$role_price+($role_price*$percent/100);
+								$regular = get_post_meta( $post_id, '_regular_price', true);
+								if(is_numeric($regular)){
+									if($all_roles[$role]['price_sign']=='+'){
+											$new_price=$regular+($regular*$all_roles[$role]['price_percent']/100);
 											if(is_numeric($new_price)) return $new_price;
-										}elseif($all_roles[$role]['price_sign']=='-'){
-											$new_price=$role_price-($role_price*$percent/100);
+									}elseif($all_roles[$role]['price_sign']=='-'){
+											$new_price=$regular-($regular*$all_roles[$role]['price_percent']/100);
 											if(is_numeric($new_price)) return $new_price;
-										}
 									}
 								}
 								break;
@@ -147,6 +155,24 @@ Version: 1.0
 									}elseif($all_roles[$role]['price_sign']=='-'){
 											$new_price=$msrp-($msrp*$all_roles[$role]['price_percent']/100);
 											if(is_numeric($new_price)) return $new_price;
+									}
+								}
+							break;
+							default:
+								$price_role_ = explode('pricerole_',$all_roles[$role]['price_type2']);
+								if(isset($price_role_[1])){
+									$price_role=$price_role_[1];}
+								else { break;}
+								if(!empty($price_role)){
+									$role_price = get_post_meta($post_id,$price_role.'_price' , true);
+									if(!empty($role_price)){
+										if($all_roles[$role]['price_sign']=='+'){
+											$new_price=$role_price+($role_price*$percent/100);
+											if(is_numeric($new_price)) return $new_price;
+										}elseif($all_roles[$role]['price_sign']=='-'){
+											$new_price=$role_price-($role_price*$percent/100);
+											if(is_numeric($new_price)) return $new_price;
+										}
 									}
 								}
 							break;
@@ -216,7 +242,7 @@ Version: 1.0
 						global $wp_roles;
 						$all_roles = $wp_roles->roles;
 						foreach($all_roles as $key=>$role){
-							if($role['price_roles']==$role_key){
+							if($role['price_type2']=='pricerole_'.$role_key && $role['price_type']=='c' && $role['priceon']==1){
 								wp_die(__("Can't disable Price Levels: ",$this->textdomain).$role['name'].__(" role still uses this role to calculate price.",$this->textdomain).'<br /><a href="javascript:history.back(1);">'.__("<< Back",$this->textdomain).'</a>');
 							}
 						}
@@ -226,7 +252,7 @@ Version: 1.0
 						$val[$role_key]['price_type2'] = $_POST['price_type2'];
 						$val[$role_key]['price_sign'] = $_POST['price_sign'];
 						$val[$role_key]['price_percent'] = $_POST['price_percent'];
-						if($_POST['price_type2']==1){$val[$role_key]['price_roles'] = $_POST['price_roles'];}
+						$val[$role_key]['priceover'] = $_POST['priceover'];
 					}
 					update_option( 'wp_user_roles', $val ); 
 					wp_redirect( get_bloginfo('url').'/wp-admin/admin.php?page=customer-levels' );
@@ -247,6 +273,11 @@ Version: 1.0
 					$priceon='checked="checked"';
 				}else{
 					$priceon='';
+				}
+				if(isset($all_roles[$role_key]['priceover']) && $all_roles[$role_key]['priceover']==1){
+					$priceover='checked="checked"';
+				}else{
+					$priceover='';
 				}
 				if(isset($all_roles[$role_key]['price_type']) && $all_roles[$role_key]['price_type']=='c'){
 					$cal_price='selected="selected"';
@@ -269,7 +300,7 @@ Version: 1.0
 						if(isset($role->capabilities['woo_role']) && $role->capabilities['woo_role']==1){
 							$all_roles = $wp_roles->roles;
 							foreach($all_roles as $key=>$role){
-								if($role['price_roles']==$role_key){
+								if($role['price_type2']=='pricerole_'.$role_key && $role['price_type']=='c' && $role['priceon']==1){
 									wp_die(__("Can't delete: ",$this->textdomain).$role['name'].__(" role still uses this role to calculate price.",$this->textdomain).'<br /><a href="javascript:history.back(1);">'.__("<< Back",$this->textdomain).'</a>');
 								}
 							}
