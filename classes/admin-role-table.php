@@ -104,7 +104,7 @@ class WC_PriceLevels_AdminRolesTable extends WP_List_Table {
 			foreach($_REQUEST['role'] as $role_key){
 				$role=get_role( $role_key );
 				if(isset($role->capabilities['woo_role']) && $role->capabilities['woo_role']==1){ 
-					$wp_user_search = new WP_User_Search($usersearch, $userspage, $role_key );
+					$wp_user_search = new WP_User_Query($usersearch, $userspage, $role_key );
 					$editors = $wp_user_search->get_results();
 					$user_num = sizeof($editors);
 					if($user_num>0){ wp_die($role->name.' '.__("role still has",$this->textdomain).' '.$user_num.' '.__("customers / users assigned to it. You must remove all users from a role before it can be deleted.",$this->textdomain).'<br /><a href="javascript:history.back(1);">'.__("<< Back",$this->textdomain).'</a>');
@@ -160,11 +160,12 @@ class WC_PriceLevels_AdminRolesTable extends WP_List_Table {
 		$all_roles = $wp_roles->roles;
 		$result = count_users();
 		$table_data=array();
+		global $usersearch; global $userspage;
 		foreach($all_roles as $key=>$role){
 			$table_data[$i]['ID']=$key;
 			$table_data[$i]['title']= $role['name'];
 			$table_data[$i]['key']= $key;
-			$wp_user_search = new WP_User_Search($usersearch, $userspage, $key);
+			$wp_user_search = new WP_User_Query($usersearch, $userspage, $key);
 			$editors = $wp_user_search->get_results();
 			$table_data[$i]['number']= sizeof($editors);
 			$edit = sprintf('<a href="?page=%s&role=%s">'.__("Edit",$this->textdomain).'</a>','edit_role',$key);

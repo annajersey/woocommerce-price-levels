@@ -13,6 +13,7 @@ Version: 1.0
 			
 			public $textdomain = 'wc_pricelevels';
 			public function __construct() {
+				global $product;
 				include_once( 'classes/admin-role-table.php' );
 				// called only after woocommerce has finished loading
 				add_action( 'woocommerce_init', array( &$this, 'woocommerce_loaded' ) );
@@ -120,7 +121,7 @@ Version: 1.0
 					$percent=(float)$all_roles[$role]['price_percent'];
 					$check_price = get_post_meta($post_id,$role.'_price' , true);
 					
-					if($all_roles[$role]['price_type']=='c' &&  (empty($all_roles[$role]['priceover']) || ($all_roles[$role]['priceover']==1 && is_numeric($check_price)==false))){
+					if($all_roles[$role]['price_type']=='c' &&  (empty($all_roles[$role]['priceover']) || ($all_roles[$role]['priceover']==1 && is_numeric($check_price)==false))){ 
 						switch($all_roles[$role]['price_type2']){
 							case 1: //Regular Price 
 								$regular = get_post_meta( $post_id, '_regular_price', true);
@@ -158,14 +159,15 @@ Version: 1.0
 									}
 								}
 							break;
-							default:
+							default: 
 								$price_role_ = explode('pricerole_',$all_roles[$role]['price_type2']);
 								if(isset($price_role_[1])){
 									$price_role=$price_role_[1];}
-								else { break;}
+								else {  break;}
+								
 								if(!empty($price_role)){
 									$role_price = get_post_meta($post_id,$price_role.'_price' , true);
-									if(!empty($role_price)){
+									if(is_numeric($role_price)){
 										if($all_roles[$role]['price_sign']=='+'){
 											$new_price=$role_price+($role_price*$percent/100);
 											if(is_numeric($new_price)) return $new_price;
@@ -179,8 +181,10 @@ Version: 1.0
 						}
 					}
 					
-					$new_price = get_post_meta($post_id,$role.'_price' , true);
-					if(is_numeric($new_price)) return $new_price;
+					if($all_roles[$role]['price_type']=='u' || (isset($all_roles[$role]['priceover']) && $all_roles[$role]['priceover']==1)){
+						$new_price = get_post_meta($post_id,$role.'_price' , true);
+						if(is_numeric($new_price)) return $new_price;
+					}
 					
 				}
 				return $price;
