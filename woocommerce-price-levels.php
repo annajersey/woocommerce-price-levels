@@ -36,6 +36,9 @@ Version: 1.0
 			public function woocommerce_loaded() {
 				add_action( 'woocommerce_product_options_pricing', array( &$this,  'price_for_roles' ));
 				add_action( 'save_post', array( &$this,  'price_for_roles_save' ) );
+				add_action( 'woocommerce_product_after_variable_attributes',array( &$this,  'price_for_roles_varibles' ), 10, 2  );
+				add_action( 'woocommerce_product_after_variable_attributes_js', array( &$this,  'price_for_roles_varibles' ) );
+				add_action( 'woocommerce_process_product_meta_variable', array( &$this,  'price_for_roles_varibles_save' ), 10, 1 );
 			}
 			
 			/**
@@ -321,6 +324,81 @@ Version: 1.0
 					}
 				}
 			
+				function price_for_roles_varibles( $loop, $variation_data ) {
+					global $wp_roles;
+					$all_roles = $wp_roles->roles;
+					?>
+					<tr>
+					<td><label><?php  _e('Cost Price',$this->textdomain) . ' (' . get_woocommerce_currency_symbol() . ')'; ?></label></td>
+					<td><input type="text" size="5" name="wc_pl_cost[<?php echo $loop; ?>]" value="<?php echo isset($variation_data['wc_pl_cost'][0]) ? $variation_data['wc_pl_cost'][0] : ''; ?>"/>
+					</td></tr>
+					<tr><td>
+					<label><?php  _e('MSRP',$this->textdomain) . ' (' . get_woocommerce_currency_symbol() . ')'; ?></label></td>
+					<td><input type="text" size="5" name="wc_pl_msrp[<?php echo $loop; ?>]" value="<?php echo isset($variation_data['wc_pl_msrp'][0]) ? $variation_data['wc_pl_msrp'][0] : ''; ?>"/>
+					</td></tr>
+					<?php  
+					foreach($all_roles as $key=>$role){
+						if (isset($role['priceon']) && $role['priceon']==1){
+							if (isset($role['price_type']) && $role['price_type']=='c' && empty($role['priceover'])){
+								echo '<tr><td><label for="another_test_price">'.$role['name'].' '.__('Price',$this->textdomain) . ' (' . get_woocommerce_currency_symbol() . ')'.'</label></td><td>Calculated 	</td></tr>';
+							}
+							else{ ?>
+							<tr><td><label><?php  echo $role['name'].' '.__('Price',$this->textdomain) . ' (' . get_woocommerce_currency_symbol() . ')'; ?></label>
+							</td><td><input type="text" size="5" name="<?php echo $key; ?>_price[<?php echo $loop; ?>]" value="<?php echo isset($variation_data[ $key.'_price'][0]) ? $variation_data[ $key.'_price'][0] : ''; ?>"/>
+							</td></tr>
+							<?php }
+						}
+					} ?>
+					
+					</td>
+					</tr>
+					<?php
+				}
+			
+				
+				function price_for_roles_varibles_save( $post_id ) {
+					global $wp_roles;
+					$all_roles = $wp_roles->roles;
+					if (isset( $_POST['variable_sku'] ) ) : 
+						$variable_sku = $_POST['variable_sku'];
+						$variable_post_id = $_POST['variable_post_id'];
+						for ( $i = 0; $i < sizeof( $variable_sku ); $i++ ) :
+							$variation_id = (int) $variable_post_id[$i];
+							foreach($all_roles as $key=>$role){
+								if ((isset($role['price_type']) && $role['price_type']=='c' && empty($role['priceover'])) || empty($role['priceon'])){
+									continue;
+								}
+								$variable_role_price = $_POST[$key.'_price'];
+								if ( isset( $variable_role_price[$i] ) ) { 
+									if ( is_numeric( $variable_role_price[$i] ) )  
+										update_post_meta( $variation_id,$key.'_price',   $variable_role_price[$i] );
+									elseif(empty( $variable_role_price[$i] )) 
+										delete_post_meta( $variation_id, $key.'_price' );
+								} 
+								else 
+									delete_post_meta( $variation_id, $key.'_price' );
+							}
+							$variable_wc_pl_cost = $_POST['wc_pl_cost'][$i];
+							echo $variable_wc_pl_cost.' ';
+							if ( isset( $variable_wc_pl_cost ) ) { 
+									if ( is_numeric( $variable_wc_pl_cost ) )  
+									update_post_meta( $variation_id,'wc_pl_cost', $variable_wc_pl_cost );
+									elseif(empty( $variable_wc_pl_cost )) delete_post_meta( $variation_id, 'wc_pl_cost' );
+							} else 
+								delete_post_meta( $variation_id, 'wc_pl_cost');
+							$variable_wc_pl_msrp = $_POST['wc_pl_msrp'][$i];
+							if ( isset( $variable_wc_pl_msrp ) ) { 
+								if ( is_numeric($variable_wc_pl_msrp ) )  
+									update_post_meta( $variation_id,'wc_pl_msrp', $variable_wc_pl_msrp );
+								elseif(empty( $variable_wc_pl_msrp )) 
+									delete_post_meta( $variation_id, 'wc_pl_msrp' );
+							} else 
+								delete_post_meta( $variation_id, 'wc_pl_msrp');	
+						endfor;
+					endif;
+				}
+				
+				
 		}
 		
 		
