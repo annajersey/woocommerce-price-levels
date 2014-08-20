@@ -27,6 +27,7 @@ Version: 1.0
 				add_action( 'admin_action_deleterole', array( &$this, 'deleterole_admin_action' ) );
 				add_action( 'admin_action_addrole', array( &$this, 'addrole_admin_action' ) );
 				add_action( 'admin_action_editrole', array( &$this, 'editrole_admin_action' ) );
+				add_filter('woocommerce_get_price_html',  array( &$this, 'return_variation_price_html' ), $product, 2);
 			}
 		
 			/**
@@ -111,20 +112,19 @@ Version: 1.0
 			
 			
 			public function return_custom_price_level ($price, $product) {
-				 global $post; global $wp_roles;
+				global $post; global $wp_roles;
 				$user_id = get_current_user_id();
 				$user = new WP_User( $user_id );
 				$role = $user->roles[0];
-				//echo($role);
-				$post_id = $product->id;
-				//echo $post_id;
+				if(!empty($product->variation_id))
+					$post_id = $product->variation_id;
+				else
+					$post_id = $product->id;
 				$all_roles = $wp_roles->roles;
-				
 				if($role && isset($all_roles[$role]['priceon']) && $all_roles[$role]['priceon']==1){
-					$percent=(float)$all_roles[$role]['price_percent'];
 					$check_price = get_post_meta($post_id,$role.'_price' , true);
-					
 					if($all_roles[$role]['price_type']=='c' &&  (empty($all_roles[$role]['priceover']) || ($all_roles[$role]['priceover']==1 && is_numeric($check_price)==false))){ 
+						$percent=(float)$all_roles[$role]['price_percent'];
 						switch($all_roles[$role]['price_type2']){
 							case 1: //Regular Price 
 								$regular = get_post_meta( $post_id, '_regular_price', true);
@@ -398,7 +398,62 @@ Version: 1.0
 					endif;
 				}
 				
+				public function return_variation_price_html($price,$product){ 
+					 if($product->is_type( 'variable' )){
+						foreach($product->children as $postid){
+							if($this->checkIfCustomPrice($postid)){
+								$price = preg_replace('#(<del.*?>).*?(</del>)#', '$1$2', $price); //hide crossed price for not to be confused with sale price
+								break;
+							}
+						}
+					}
+
+					return $price;
+				}
 				
+				public function checkIfCustomPrice($post_id){ //check if for this product we have custom price
+					global $post; global $wp_roles;
+					$user_id = get_current_user_id();
+					$user = new WP_User( $user_id );
+					$role = $user->roles[0];
+					$all_roles = $wp_roles->roles;
+					if($role && isset($all_roles[$role]['priceon']) && $all_roles[$role]['priceon']==1){
+						$check_price = get_post_meta($post_id,$role.'_price' , true);
+						if($all_roles[$role]['price_type']=='c' &&  (empty($all_roles[$role]['priceover']) || ($all_roles[$role]['priceover']==1 && is_numeric($check_price)==false))){ 
+							switch($all_roles[$role]['price_type2']){
+								case 1: //Regular Price 
+									$regular = get_post_meta( $post_id, '_regular_price', true);
+									if(!empty($regular)){ return true; }else{return false;}
+									break;
+								case 2: //Cost
+									$cost_price=get_post_meta($post_id,'wc_pl_cost', true);
+									if(!empty($cost_price)){return true;}else{return false;}
+									break;
+								case 3: //MSRP
+									$msrp=get_post_meta($post_id,'wc_pl_msrp', true);
+									if(!empty($msrp)){return true;}else{return false;}
+									break;
+								default: 
+									$price_role_ = explode('pricerole_',$all_roles[$role]['price_type2']);
+									if(isset($price_role_[1])){
+										$price_role=$price_role_[1];}
+									else { return false;}
+									
+									if(!empty($price_role)){
+										$role_price = get_post_meta($post_id,$price_role.'_price' , true);
+										if(!empty($role_price)){return true;}else{return false;}
+									}else{return false;}
+								break;
+							}
+						}
+						
+						if($all_roles[$role]['price_type']=='u' || (isset($all_roles[$role]['priceover']) && $all_roles[$role]['priceover']==1)){
+							$new_price = get_post_meta($post_id,$role.'_price' , true);
+							if(!empty($new_price)){return true;}else{return false;}
+						}
+					}
+					return false;
+				}
 		}
 		
 		
