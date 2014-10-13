@@ -402,7 +402,7 @@ Version: 1.0
 				
 				public function return_variation_price($price,$product,$min_or_max,$display){// Fix prices displaying (correct min-max and hide crossed prices)
 					$check_is_custom=false; 
-					if(!empty($product->get_children())){
+					if(sizeof($product->get_children())>0){
 						$min_price=null; $max_price=null; $max_price_id=null; $min_price_id=null;
 						foreach($product->get_children() as $child_id){
 							$child = new WC_Product($child_id);
@@ -421,28 +421,28 @@ Version: 1.0
 								$min_price_id = $child_id;
 							}
 						}
-					}	
+						
 					
-					if(!$check_is_custom){return $price;} //if this variable product has no custom price - show prices as they are by default
-					if($min_or_max=='min'){
-						$variation_id = $min_price_id;
-					}
-					elseif($min_or_max=='max'){
-						$variation_id = $max_price_id;
-					}
-					
-					if ( $display ) {
-						$variation        = $product->get_child( $variation_id );
-						if ( $variation ) {
-							$tax_display_mode = get_option( 'woocommerce_tax_display_shop' );
-							$price            = $tax_display_mode == 'incl' ? $variation->get_price_including_tax() : $variation->get_price_excluding_tax();
-						} else {
-							$price = '';
+						if(!$check_is_custom){return $price;} //if this variable product has no custom price - show prices as they are by default
+						if($min_or_max=='min'){
+							$variation_id = $min_price_id;
 						}
-					} else {
-						$price = get_post_meta( $variation_id, '_price', true );
+						elseif($min_or_max=='max'){
+							$variation_id = $max_price_id;
+						}
+						
+						if ( $display ) {
+							$variation        = $product->get_child( $variation_id );
+							if ( $variation ) {
+								$tax_display_mode = get_option( 'woocommerce_tax_display_shop' );
+								$price            = $tax_display_mode == 'incl' ? $variation->get_price_including_tax() : $variation->get_price_excluding_tax();
+							} else {
+								$price = '';
+							}
+						} else {
+							$price = get_post_meta( $variation_id, '_price', true );
+						}
 					}
-
 					return $price;	
 				}
 		}
